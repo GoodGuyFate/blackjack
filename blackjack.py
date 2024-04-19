@@ -8,6 +8,7 @@ from functions import (
     handle_player_turn,
     play_dealer_turn,
     determine_winner,
+    buy_more_chips,
 )
 
 
@@ -60,6 +61,11 @@ def main():
         elif player_value > 21:
             print("Player Bust! You lose.")
             chips -= bet
+            if chips <= 0:
+                chips_added = buy_more_chips()
+                if chips_added > 0:
+                    chips += chips_added
+                    print("Added", chips_added, "chips to your balance.")
         else:
             # Play dealer turn if player hasn't busted or achieved Blackjack
             dealer_value = play_dealer_turn(deck, dealer_hand, calculate_card_value)
@@ -77,8 +83,17 @@ def main():
             elif winner == "Push":
                 print("Push. No chips gained or lost.")
             elif winner in ("Dealer Wins", "Player Bust"):
-                chips -= bet
                 print("You lose.", bet, "chips deducted from your total.")
+                chips -= bet
+
+                if chips <= 0:
+                    chips_added = buy_more_chips()
+                    if chips_added > 0:
+                        chips += chips_added
+                        print("Added", chips_added, "chips to your balance.")
+                    else:
+                        print("You're out of chips! Thanks for playing.")
+                        playing = False
 
         # Check remaining chips and ask to continue
         if chips > 0:

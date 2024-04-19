@@ -159,3 +159,22 @@ def determine_winner(player_value, dealer_value):
         return "Push"
     else:
         return "Dealer Wins"
+
+
+def buy_more_chips():
+    """
+    This function prompts the user to buy more chips (essentially adding chips to the balance).
+
+    Returns:
+        int: The number of chips added (0 if the user declines).
+    """
+    while True:
+        choice = input(
+            "Would you like to add 100 chips to your balance? (y/n) "
+        ).lower()
+        if choice == "y":
+            return 100
+        elif choice == "n":
+            return 0
+        else:
+            print("Invalid choice. Please enter 'y' or 'n'.")
